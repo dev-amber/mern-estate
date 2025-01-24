@@ -1,10 +1,13 @@
 import { useState } from "react"
 import {Link,useNavigate} from "react-router-dom"
+
+
 export default function SignUp() {
   const [formData,setFormData]=useState({});
   const [error,setError]=useState(null);
   const [loading,setLoading]=useState(false);
   const navigate=useNavigate();
+
 
   const handlerChange=(e)=>{
 setFormData({
@@ -14,7 +17,7 @@ setFormData({
   }
   const handleSubmit=async(e)=>{
     try {
-      setLoading(true);
+     setLoading(true);
     e.preventDefault();
     const res=await fetch('/api/auth/signup',
       {
