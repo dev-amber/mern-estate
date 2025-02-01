@@ -5,6 +5,7 @@ import userRouter from "./routes/user.route.js"
 import authRouter from "./routes/auth.route.js"
 import cookieParser from "cookie-parser";
 
+
 dotenv.config();
 
 
@@ -22,7 +23,6 @@ app.use(express.json());
 
 //cookie parser
 app.use(cookieParser());
-
 
 
 
@@ -47,6 +47,8 @@ app.use((err,req,res,next)=>{
         message,
     })
 })
+
+
 
 
 
