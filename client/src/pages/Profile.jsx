@@ -1,7 +1,7 @@
 import { useDispatch,useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import { getStorage, ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { app } from "../firebase";
+import  app  from "../firebase";
 import {Link} from "react-router-dom"
 import { updateUserStart,
   updateUserSuccess,
@@ -14,6 +14,11 @@ import { updateUserStart,
   signOutUserSuccess,
  } from "../redux/user/userSlice";
 
+//firebase cloud
+//allow read;
+//allow write: if
+//request.resource.size < 2 * 1024 * 1024 &&
+//request.resource.contentType.matches('image/*')
 
 export default function Profile() {
   const fileRef = useRef(null);
