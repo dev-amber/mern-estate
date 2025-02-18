@@ -8,8 +8,8 @@ import listingRouter from "./routes/listing.route.js"
 
 dotenv.config();
 
-
 mongoose.connect(process.env.MONGO).then(()=>{
+    console.log("test1")
     console.log("Connected to MongoDB");
 })
 .catch((err) => {
@@ -49,6 +49,7 @@ app.use((err,req,res,next)=>{
         message,
     })
 })
+
 
 
 
