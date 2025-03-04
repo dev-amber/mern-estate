@@ -137,24 +137,30 @@ console.log(userListings);
   }
 
   //show listings
-  const handleShowListings=async()=>{
+  const handleShowListings = async () => {
     try {
-     setShowListingsError(false);
-
-     const res=await fetch(`/api/user/listings/${currentUser._id}`);
-     
-     
-     const data=await res.json();
-     if(data.success === false){
-       setShowListingsError(true);
-       return;
-     }
-    } catch (error) {
-     setShowListingsError(true);
-    }
-} 
+      setShowListingsError(false);
+      
+      const res = await fetch(`/api/user/listings/${currentUser._id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
   
-
+      const data = await res.json();
+  
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+  
+      setUserListings(data);  // ✅ Update state with fetched listings
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
+  
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>

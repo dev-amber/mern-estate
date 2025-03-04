@@ -9,7 +9,7 @@ import listingRouter from "./routes/listing.route.js"
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(()=>{
-    console.log("test1")
+   
     console.log("Connected to MongoDB");
 })
 .catch((err) => {
@@ -22,7 +22,10 @@ const app=express();
 app.use(express.json());
 
 //cookie parser
+
 app.use(cookieParser());
+
+
 
 
 
