@@ -24,25 +24,28 @@ export default function Listing() {
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchListing = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
         const res = await fetch(`/api/listing/get/${params.listingId}`);
         const data = await res.json();
-        if (data.success === false) {
+        if (!isMounted) return;
+        if (!res.ok || data.success === false) {
           setError(true);
-          setLoading(false);
-          return;
+        } else {
+          setListing(data);
         }
-        setListing(data);
-        setLoading(false);
-        setError(false);
       } catch (error) {
-        setError(true);
-        setLoading(false);
+        if (isMounted) setError(true);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
     fetchListing();
+    return () => {
+      isMounted = false;
+    };
   }, [params.listingId]);
 
   return (
@@ -55,7 +58,6 @@ export default function Listing() {
       )}
       {listing && !loading && !error && (
         <div>
-          {/* ✅ Fixed Swiper Component */}
           <Swiper navigation modules={[Navigation]}>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
@@ -87,9 +89,10 @@ export default function Listing() {
               Link copied!
             </p>
           )}
+
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
             <p className="text-2xl font-semibold">
-              {listing.name} - ${" "}
+              {listing.name} - $
               {listing.offer
                 ? listing.discountPrice.toLocaleString("en-US")
                 : listing.regularPrice.toLocaleString("en-US")}
@@ -135,6 +138,7 @@ export default function Listing() {
                 {listing.furnished ? "Furnished" : "No Furnished"}
               </li>
             </ul>
+
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
