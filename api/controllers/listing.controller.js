@@ -42,4 +42,30 @@ return next(errorHandler(404,"listing not foumd"));
   } catch (error) {
     next(error);
   }
+};
+
+
+//update listing
+export const updateListing=async(req,res,next)=>{
+  //first check exist or not
+  const listing=await Listing.findById(req.params.id);
+  if(!listing){
+    return next(errorHandler(404,'Listing not found'));
+
+  }
+  //if exist
+  if(req.user.id !== listing .useRef){
+    return next(errorHandler(401,"you can only update your own listings!"));
+  }
+  try {
+    const updatedListing=await Listing.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {new: true}
+    );
+    res.status(200).json(updatedListing);
+  } catch (error) {
+    next(error);
+  }
+  
 }
