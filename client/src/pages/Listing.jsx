@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import {Swiper,SwiperSlide} from "swiper/react"
 import SwiperCore from "swiper"
+import {useSelector} from "react-redux"
 import {Navigation} from "swiper/modules"
 import "swiper/css/bundle";
  import{FaShare,
@@ -12,6 +13,7 @@ import "swiper/css/bundle";
   FaParking,
   FaChair,
  } from "react-icons/fa"
+import Contact from '../components/Contact'
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -19,7 +21,11 @@ export default function Listing() {
   const [loading,setLoading]=useState(true);
   const [copied, setCopied] = useState(false);
   const[error,setError]=useState(false);
+  const [contact,setContact]=useState(false);
+  const {currentUser}=useSelector((state)=>
+   state.user);
   const params=useParams();
+
   useEffect(()=>{
     const fetchListing=async()=>{
    try {
@@ -65,7 +71,8 @@ export default function Listing() {
         </SwiperSlide>
       ))}
     </Swiper>
-    <div className="fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 flex justify-center items-center bg-slate-100 cursor-pointer">
+    <div className="fixed top-[13%] right-[3%] z-10 border rounded-full w-12 h-12 
+    flex justify-center items-center bg-slate-100 cursor-pointer">
              <FaShare
                className="text-slate-500"
                onClick={() => {
@@ -137,8 +144,16 @@ export default function Listing() {
       <FaChair className='text-lg'/>
          {listing.furnished ? "Furnished" :'UnFurnished'}
     </li>
+  </ul> 
 
-  </ul>  
+  {currentUser  && listing.useRef !== currentUser._id && !contact &&(
+     <button onClick={()=>setContact(true)}
+      className='bg-slate-700 text-white rounded-lg 
+     uppercase hover:opacity-95 p-3'>
+       Contact landlord</button> 
+  )}
+  {contact && <Contact listing={listing}/>}
+
 </div>
 
 </div>
