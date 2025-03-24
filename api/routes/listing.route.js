@@ -4,6 +4,7 @@ import {
   getSingleListing,
   deleteListing,
   updateListing,
+  getListings,
   getListing,
   
 } from "../controllers/listing.controller.js";
@@ -16,5 +17,6 @@ router.delete("/delete/:id",verifyToken,deleteListing);
 router.post("/update/:id",verifyToken,updateListing);
 router.get("/get/:id",getListing);
 router.get("/get/:id", getSingleListing);
+router.get("/get",getListings)
 
 export default router;
