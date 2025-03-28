@@ -37,7 +37,7 @@ export default function Listingitem({listing}) {
             </div>
             <div className="font-bold text-xs">
                 {listing.bathrooms > 1 ? `${listing.bathrooms} baths`:
-                `${listing.bathrooms} bath`}
+                `${listing.bathrooms}  bath`}
             </div>
         </div>
     </div>
