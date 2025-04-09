@@ -7,7 +7,6 @@ import {Navigation} from "swiper/modules"
 import "swiper/css/bundle";
  import{FaShare,
   FaMapMarkerAlt,
-  FaListAlt,
   FaBed,
   FaBath,
   FaParking,
