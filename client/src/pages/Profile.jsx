@@ -137,16 +137,14 @@ export default function Profile() {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`
-       
-      );
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
 
       const data = await res.json();
       if (data.success === false || !data.listings) {
         setShowListingsError(true);
         return;
       }
-      setUserListings(data.listings); 
+      setUserListings(data.listings);
     } catch (error) {
       setShowListingsError(true);
       console.error("Error fetching listings:", error);
@@ -154,23 +152,23 @@ export default function Profile() {
   };
 
   //delete listing
-  const handleListingDelete=async(listingId)=>{
+  const handleListingDelete = async (listingId) => {
     try {
-      const res=await fetch(`/api/listing/delete/${listingId}`,
-        {
-          "method":"DELETE",
-        }
-      )
-      const data=await res.json();
-      if(data.success === false){
-       console.log(data.message);
-       return;
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
       }
-      setUserListings((prev)=>prev.filter((listing)=>listing._id !==listingId));
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
     } catch (error) {
-     console.log(error.message);
+      console.log(error.message);
     }
-  }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -281,13 +279,17 @@ export default function Profile() {
             </Link>
 
             <div className="flex flex-col items-center">
-             <button onClick={()=>handleListingDelete(listing._id)} 
-             className="text-red-700 uppercase">Delete</button>
-             
-             <Link to={`/update-listing/${listing._id}`}>
-            <button className="text-green-700 uppercase">Edit</button>
-             </Link>
-              </div>
+              <button
+                onClick={() => handleListingDelete(listing._id)}
+                className="text-red-700 uppercase"
+              >
+                Delete
+              </button>
+
+              <Link to={`/update-listing/${listing._id}`}>
+                <button className="text-green-700 uppercase">Edit</button>
+              </Link>
+            </div>
           </div>
         ))}
     </div>
